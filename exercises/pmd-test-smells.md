@@ -35,3 +35,73 @@ Running `pmd check -d ./commons-collections/ -R category/java/bestpractices.xml/
 ./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:905:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
 ./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:925:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
 ```
+
+Original test case at `./commons-collections/src/test/java/org/apache/commons/collections4/iterators/AbstractMapIteratorTest.java:139`:
+
+```
+/**
+* Test that the empty list iterator contract is correct.
+*/
+@Test
+public void testEmptyMapIterator() {
+	if (!supportsEmptyIterator()) {
+    		return;
+	}
+
+	final MapIterator<K, V> it = makeEmptyIterator();
+	assertFalse(it.hasNext());
+
+	// next() should throw a NoSuchElementException
+	assertThrows(NoSuchElementException.class, () -> it.next());
+
+	// getKey() should throw an IllegalStateException
+	assertThrows(IllegalStateException.class, () -> it.getKey());
+
+	// getValue() should throw an IllegalStateException
+	assertThrows(IllegalStateException.class, () -> it.getValue());
+
+	if (!supportsSetValue()) {
+    		// setValue() should throw an UnsupportedOperationException/IllegalStateException
+		try {
+			it.setValue(addSetValues()[0]);
+        		fail();
+    		} catch (final UnsupportedOperationException | IllegalStateException ex) {
+        		// ignore
+    		}
+	} else {
+   		// setValue() should throw an IllegalStateException
+    		assertThrows(IllegalStateException.class, () -> it.setValue(addSetValues()[0]));
+	}
+}
+```
+
+Updated test case::
+
+```
+/**
+* Test that the empty list iterator contract is correct.
+*/
+@Test
+public void testEmptyMapIterator() {
+        if (!supportsEmptyIterator()) {
+                return;
+        }
+
+        final MapIterator<K, V> it = makeEmptyIterator();
+        assertFalse(it.hasNext());
+
+        // next() should throw a NoSuchElementException
+        assertThrows(NoSuchElementException.class, () -> it.next());
+
+        // getKey() should throw an IllegalStateException
+        assertThrows(IllegalStateException.class, () -> it.getKey());
+
+        // getValue() should throw an IllegalStateException
+        assertThrows(IllegalStateException.class, () -> it.getValue());
+
+	
+        // setValue() should throw an IllegalStateException
+        Throwable t = assertThrows(Exception.class, () -> it.setValue(addSetValues()[0]));
+	assertTrue(t instanceof IllegalStateException || t instanceof UnsupportedOperationException);
+}
+```
