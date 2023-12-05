@@ -32,4 +32,17 @@ assertEquals(a,b) // It pass, because the equals method will check values
 assertSame(a,b) // It fail, memory locations aren't the same
 ```
 
-3. `fail` could be used to mark unreachable code
+3. `fail` could be used to mark unreachable code like in the exemple below :
+```agsl
+if (a>0){
+...
+}
+else if (a==0){
+...
+}
+else{
+fail
+}
+```
+
+4. AssertThrows allow to catch the exception value and operate on it
