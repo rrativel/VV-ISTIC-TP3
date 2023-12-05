@@ -17,14 +17,14 @@ This type of check should e done with assertEquals method by specifying the Delt
 
 2. `assertEquals` method will compare two object by using the `equals` method. `assertSame` method check if two objects refer to the same memory location.
 If we use both method to check primitive value, they will both check for value equality: 
-```
+```java
 int a = 5;
 int b = 5;
 assertEquals(a,b);
 assertSame(a,b);
 ```
 When comparing objects, results won't be the same: 
-```
+```java
 String a = new String("Hello World");
 String b = new String("Hello World");
 
@@ -33,7 +33,7 @@ assertSame(a,b) // It fail, memory locations aren't the same
 ```
 
 3. `fail` could be used to mark unreachable code like in the exemple below :
-```agsl
+```java
 if (a>0){
 ...
 }
