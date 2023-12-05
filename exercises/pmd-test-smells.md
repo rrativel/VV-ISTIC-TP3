@@ -24,3 +24,14 @@ way to catch such exceptions using `assertThrows`.
  - **JUnit4TestShouldUseTestAnnotation**: As of JUnit4, test methods need to be annotated with `@Test` to be run, whereas
 in Junit3, methods had to be named `test....()`. This check exists to not forget methods during the transition from JUnit3
 to JUnit4.
+
+Running `pmd check -d ./commons-collections/ -R category/java/bestpractices.xml/JUnitUseExpected` returns:
+
+```
+./commons-collections/src/test/java/org/apache/commons/collections4/collection/AbstractCollectionTest.java:1284:	JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+./commons-collections/src/test/java/org/apache/commons/collections4/iterators/AbstractMapIteratorTest.java:139:		JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:850:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:861:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:905:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+./commons-collections/src/test/java/org/apache/commons/collections4/map/AbstractMapTest.java:925:			JUnitUseExpected:	In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions
+```
