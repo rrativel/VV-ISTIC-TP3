@@ -7,8 +7,63 @@ For example: `{[][]}({})` is balanced, while `][`, `([)]`, `{`, `{(}{}` are not.
 Implement the following method:
 
 ```java
-public static boolean isBalanced(String str) {
-    ...
+public class Balance {
+
+    public static boolean isBalanced(String str) {
+        ArrayList<String> tmp = new ArayList<String>();
+        Iterator it = s.iterator();
+
+
+        while (it.hasNext()) {
+            switch (it.next()) {
+
+                case '{':
+                    tmp.add('{');
+                    break;
+
+                case '[':
+                    tmp.add('[');
+                    break;
+
+                case '(':
+                    tmp.add('(');
+                    break;
+
+                case '}':
+
+                    if (tmp.getLastElement().equals('{')) {
+                        tmp.pop();
+
+                    } else {
+                        return false;
+                    }
+                    break;
+
+                case ']':
+
+                    if (tmp.getLastElement().equals('[')) {
+                        tmp.pop();
+
+                    } else {
+                        return false;
+                    }
+                    break;
+
+                case ')':
+
+                    if (tmp.getLastElement().equals('(')) {
+                        tmp.pop();
+
+                    } else {
+                        return false;
+                    }
+                    break;
+
+            }
+        }
+        return tmp.isEmpty();
+    }
+
 }
 ```
 
@@ -26,3 +81,26 @@ Use the project in [tp3-balanced-strings](../code/tp3-balanced-strings) to compl
 
 ## Answer
 
+| Characteristics    | Block 1 | Block 2                  | Block 3                  | Block 4                  | Block 5           |
+|--------------------|---------|--------------------------|--------------------------|--------------------------|-------------------|
+| str (Input String) | ""      | String with { (balanced) | String with [ (balanced) | String with ( (balanced) | String unbalanced |
+
+2. The test cases don't contain null case. We should add a test case with a null string.
+3. Our domain is the set of Strings of length 0 to infinity. The blocks are defined by the conditions (if, case, while...). In this method, there are 10 blocks.
+The first partition is when we don't enter in `while` at all. It corresponds to an empty string.
+The three next partitions concern the following symbols `{`, `[`, `(`. They are the opening symbols of a group. The next six concern what happens when we reach closing symbols.
+If the string is balanced so far, we keep going, otherwise, we break.
+
+Test cases:
+
+ - ""
+ - "{"
+ - "("
+ - "["
+ - "]"
+ - "}"
+ - ")"
+ - "{}[]"
+ - 
+
+2. 
