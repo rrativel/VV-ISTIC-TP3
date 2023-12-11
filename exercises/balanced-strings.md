@@ -9,10 +9,13 @@ Implement the following method:
 ```java
 public class Balance {
 
-    public static boolean isBalanced(String str) {
-        ArrayList<String> tmp = new ArayList<String>();
-        Iterator it = s.iterator();
+    public static boolean isBalanced(String str)throws IllegalArgumentException {
+        ArrayList<Character> tmp = new ArrayList<Character>();
+        if(str==null) {
+            throw new IllegalArgumentException("String cannot be null");
+        }
 
+        Iterator<Character> it = str.chars().mapToObj(c -> (char) c).iterator();
 
         while (it.hasNext()) {
             switch (it.next()) {
@@ -31,8 +34,8 @@ public class Balance {
 
                 case '}':
 
-                    if (tmp.getLastElement().equals('{')) {
-                        tmp.pop();
+                    if (!tmp.isEmpty() && tmp.get(tmp.size()-1).equals('{')) {
+                        tmp.remove(tmp.size()-1);
 
                     } else {
                         return false;
@@ -41,8 +44,8 @@ public class Balance {
 
                 case ']':
 
-                    if (tmp.getLastElement().equals('[')) {
-                        tmp.pop();
+                    if (!tmp.isEmpty() && tmp.get(tmp.size()-1).equals('[')) {
+                        tmp.remove(tmp.size()-1);
 
                     } else {
                         return false;
@@ -51,8 +54,8 @@ public class Balance {
 
                 case ')':
 
-                    if (tmp.getLastElement().equals('(')) {
-                        tmp.pop();
+                    if (!tmp.isEmpty() &&tmp.get(tmp.size()-1).equals('(')) {
+                        tmp.remove(tmp.size()-1);
 
                     } else {
                         return false;
@@ -93,6 +96,7 @@ If the string is balanced so far, we keep going, otherwise, we break.
 
 Test cases:
 
+ - null
  - ""
  - "{"
  - "("
@@ -101,6 +105,7 @@ Test cases:
  - "}"
  - ")"
  - "{}[]"
- - 
+ - "{()}"
 
-2. 
+4. 20 mutations has been fenerated and 17 where killed. It correspond to a coverage of 85%. By adding a test case with 
+random characters (not only {([])}), the coverage increased up to 100%.
